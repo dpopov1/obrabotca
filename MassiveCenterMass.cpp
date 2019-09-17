@@ -1,6 +1,6 @@
 #include "sglazivanie.h"
 #include <iostream>
-using namespace std;
+using namespace std;//
 
 double min(double* a, int n)
 {

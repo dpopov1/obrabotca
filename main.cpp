@@ -2,7 +2,7 @@
 #include "sglazivanie.h"
 #include "sortirovka.h"
 
-int main()
+int main()//
 {
 	MSD a;
 	a.construction();
