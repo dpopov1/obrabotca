@@ -10,6 +10,5 @@ int main()
 	points('.', ',',0);
 	viravnivanie(1);
 	points('.', ',', 1);
-	_CrtDumpMemoryLeaks();
 	system("pause");
 }
