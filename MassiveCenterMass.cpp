@@ -1,6 +1,6 @@
 #include "sglazivanie.h"
 #include <iostream>
-using namespace std;//
+using namespace std;
 
 double min(double* a, int n)
 {
@@ -40,6 +40,7 @@ int kolvo_mas_cm(int n, double dl_razb, double** data, int k)
 	for (int i = 0; i < n; i++)
 	{
 		int o = p;
+		double yy = fabs(data[k][i] - data[k][p]);
 		if (fabs(data[k][i] - data[k][p]) > dl_razb)
 		{
 			p = i;
@@ -47,11 +48,8 @@ int kolvo_mas_cm(int n, double dl_razb, double** data, int k)
 			if (o == p)
 				p++;
 		}
-		else {
-			if (i == n - 1)
-				nmcm++;
-		}
 	}
+	nmcm++;
 	return nmcm;
 }
 
@@ -95,6 +93,9 @@ double* glavnCM(int* NmasCM, int nmcm, double** data, int k)
 	double* CMgl = new double[nmcm];
 	for(int i =0; i<nmcm; i++)
 	CMgl[i] = glob_center(tochki[i], NmasCM[i]);
+	for (int i = 0; i < nmcm; i++)
+		delete[] tochki[i];
+	delete[] tochki;
 	return CMgl;
 }
 
@@ -118,6 +119,9 @@ double* pobochCM(double** data, int y, int* NmasCM, int nmcm) {
 	double* CMpobochca = new double [nmcm];
 	for (int i = 0; i < nmcm; i++)
 		CMpobochca[i] = glob_center(pobochca[i], NmasCM[i]);
+	for (int i = 0; i < nmcm; i++)
+		delete[] pobochca[i];
+	delete[] pobochca;
 	return CMpobochca;
 }
 
@@ -141,6 +145,10 @@ double** centr(MD dat, int N_razb, int &a) {
 	center[0] = glCM;
 	for (int i = 1; i < m; i++)
 		center[i] = pobochCM(data, i, NmasCM, nmcm);
+	delete[] NmasCM;
+	for(int i =0;i<m;i++)
+	delete[] data[i];
+	delete[] data;
 	a=nmcm;
 	return center;
 }
@@ -154,7 +162,7 @@ void MCM:: obrabotca(MD a)
 
 void MCM:: razb()
 {
-	cout << "vvedite kol-vo razbienii po x" << endl;
+	cout << "vvedite kol-vo razbienii po x, vvedite 0, esli ne xotite delat razbienia" << endl;
 	cin >> razb_;
 }
 
@@ -166,4 +174,9 @@ double** MCM::get_mcm() const
 int MCM::get_nmcm() const
 {
 	return nmcm;
+}
+
+int MCM::get_razb() const
+{
+	return razb_;
 }

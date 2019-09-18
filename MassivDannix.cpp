@@ -1,12 +1,35 @@
-#define _CRT_SECURE_NO_WARNINGS//
+#define _CRT_SECURE_NO_WARNINGS
 #include "sglazivanie.h"
 #include <iostream>
 
-using namespace std;
+
 void MD:: zapolnenie()
 {
-	cout << "vvedite colvo massivov dannix" << endl;
-	cin >> m_;
+	FILE* file_ = fopen("data.txt", "r");
+	char ddd = 0;
+	m_ = 0;
+	int yyy = 0;
+	while (ddd != '\n') {
+		char tt = ddd;
+		if (fscanf(file_, "%c", &ddd) != 1)
+		{
+			m_++;
+			break;
+		}
+		yyy++;
+		if (ddd == ' '&&yyy != 0)
+		{
+			if (tt != ' ')
+				m_++;
+		}
+		else {
+			if (ddd == '\n'&& tt != ' ')
+				m_++;
+		}
+
+	}
+
+	fclose(file_);
 	FILE* file = fopen("data.txt", "r");
 	int uu = 0;
 	double p;
@@ -22,7 +45,6 @@ void MD:: zapolnenie()
 		for (int j = 0; j < m_; j++)
 			fscanf(ffile, "%lf", &data_[j][i]);
 	fclose(ffile);
-
 }
 
 double** MD::data() const 

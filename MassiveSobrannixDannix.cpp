@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS//
+#define _CRT_SECURE_NO_WARNINGS
 #include "sglazivanie.h"
 #include <iostream>
 
@@ -10,16 +10,32 @@ void MSD:: out() const
 	for (int j = 0; j < nmcm; j++)
 		for (int i = 0; i < md.m(); i++)
 		{
-			fprintf(file, "%lf ", a[i][j]);
+			fprintf(file, "%lf", a[i][j]);
+			if (i != md.m() - 1)
+				fprintf(file, " ");
 			if (i == md.m() - 1)
+				if(j!=nmcm-1)
 				fprintf(file, "\n");
 		}
+	for (int i = 0; i < md.m(); i++)
+		delete[] a[i];
+	delete[] a;
 	fclose(file);
 }
 
-void MSD::construction()
+bool MSD::construction()
 {
-	md.zapolnenie();
 	mcm.razb();
+	if (mcm.get_razb() == 0)
+		return 0;
+	md.zapolnenie();
 	mcm.obrabotca(md);
+	return 1;
+}
+
+void sglazivanie()
+{
+	MSD a;
+	if(a.construction())
+	a.out();
 }

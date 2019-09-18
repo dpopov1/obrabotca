@@ -1,4 +1,4 @@
-#pragma once//
+#pragma once
 
 class MD;
 class MCM {
@@ -8,6 +8,7 @@ public:
 	double** get_mcm() const;
 	void in_nmcm(const int);
 	int get_nmcm() const;
+	int get_razb() const;
 private:
 	double** mcm;
 	int razb_; 
@@ -28,9 +29,10 @@ private:
 
 class MSD {
 public:
-	void construction();
+	bool construction();
 	void out() const;
 private:
 	MD md;
 	MCM mcm;
 };
+void sglazivanie();
