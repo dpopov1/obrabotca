@@ -29,11 +29,16 @@ char* get_mas(int &i, bool l)
 	return b;
 }
 
-void sort_tz(char* a, char bilo, char stalo, int n)
+void sort_tz(char* a, char bilo, char stalo, int n, bool l)
 {
 	for (int i = 0; i < n; i++)
+	{
 		if (a[i] == bilo)
 			a[i] = stalo;
+		if(!l)
+		if (a[i] == '\t')
+			a[i] = ' ';
+	}
 }
 
 void fprint(char* a, int n, bool l)
@@ -52,7 +57,7 @@ void points(char b, char c, bool l)
 {
 	int a;
 	char* t = get_mas(a,l);
-	sort_tz(t,b,c, a);
+	sort_tz(t,b,c, a,l);
 	fprint(t, a, l);
 	delete[] t;
 }

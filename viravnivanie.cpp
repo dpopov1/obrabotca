@@ -115,6 +115,35 @@ void sort_(element** data, int m, int n)
 	delete[] max;
 }
 
+void perevod_v_double(int m_, int n_, bool l)
+{
+	if (!l) {
+		FILE* ffile = fopen("data.txt", "r");
+		double** data_ = new double*[m_];
+		for (int i = 0; i < m_; i++)
+			data_[i] = new double[n_];
+		for (int i = 0; i < n_; i++)
+			for (int j = 0; j < m_; j++)
+				fscanf(ffile, "%lf", &data_[j][i]);
+		fclose(ffile);
+		FILE* file = fopen("data.txt", "w");
+		for (int j = 0; j < n_; j++)
+			for (int i = 0; i < m_; i++)
+			{
+				fprintf(file, "%lf", data_[i][j]);
+				if (i != m_ - 1)
+					fprintf(file, " ");
+				if (i == m_ - 1)
+					if (j != n_ - 1)
+						fprintf(file, "\n");
+			}
+		for (int i = 0; i < m_; i++)
+			delete[] data_[i];
+		delete[] data_;
+		fclose(file);
+	}
+}
+
 void fprint(element** data, int m, int n, bool l)
 {
 	FILE* f;
@@ -137,15 +166,13 @@ void fprint(element** data, int m, int n, bool l)
 	fclose(f);
 }
 
-element** get_data(int& m, int& n, bool l)
+element** get_data(int m, int n, bool l)
 {
 	FILE* f;
 	if (l)
 		f = fopen("out.txt", "r");
 	else
 		f = fopen("data.txt", "r");
-	m = get_m(l);
-	n = get_n(m,l);
 	element** data = new element*[m];
 	for (int i = 0; i < m; i++)
 		data[i] = new element[n];
@@ -159,6 +186,9 @@ element** get_data(int& m, int& n, bool l)
 void viravnivanie(bool l)
 {
 	int n, m;
+	m = get_m(l);
+	n = get_n(m, l);
+	perevod_v_double(m, n, l);
 	element** data = get_data(m,n,l);
 	sort_(data, m, n);
 	fprint(data, m, n,l);
